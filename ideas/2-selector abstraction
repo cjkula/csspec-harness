@@ -1,0 +1,16 @@
+An important lexical tool for this approach could involve interpolation of selectors from parameters to create reusable components that can dynamically (server-side) assign selectors using supplied arguments:
+
+@mixin my-widget($inner) {
+  border: solid 1px #123;
+  padding: 10px;
+  #{$inner} {
+    width: 100%;
+    height: 100%
+  }
+}
+
+.widget {
+  @include my-widget($inner: '.inside-block')
+}
+
+Not the most elegant syntax, but in this way SASS can define entire layouts and component behaviors while remaining agnostic about internal selectors. The big concept (in addition to encapsulation and reusability) it to purge stylistic classes from the HTML, allowing it to be purely semantic... as God intended.
