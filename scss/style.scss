@@ -1,5 +1,9 @@
-.hi {
-  .there {
-    color: blue;
+.thing {
+  position: absolute;
+  #inner1 {
+    color: #fff;
+  }
+  #inner2 {
+    color: #000;
   }
 }

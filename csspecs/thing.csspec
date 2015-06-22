@@ -1,0 +1,6 @@
+@html my-fixture
+  <div class="thing"><span id="inner1">Hello</span><span id="inner2">There</span></div>
+
+@describe thing
+  @it should be absolutely positioned
+    @expect .thing.position to_equal absolute
