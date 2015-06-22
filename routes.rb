@@ -1,4 +1,4 @@
-require 'csspecs'
+require 'csspec'
 
 get '/:file.css' do
   content_type 'text/css'
