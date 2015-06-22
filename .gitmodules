@@ -1,0 +1,3 @@
+[submodule "csspec-gem"]
+	path = csspec-gem
+	url = https://github.com/cjkula/csspec-gem
