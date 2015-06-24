@@ -1,4 +1,3 @@
-require 'csspec'
 
 get '/:file.css' do
   content_type 'text/css'
@@ -16,5 +15,5 @@ end
 
 get '/qunit/:suite.js' do
   content_type 'application/javascript'
-  CSSpecs.to_qunit params[:suite].to_sym
+  CSSpec::Document.new(file: params[:suite]).to_qunit_js
 end

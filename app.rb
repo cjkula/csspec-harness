@@ -4,13 +4,11 @@ require 'sinatra'
 
 # add directories to load path
 $:.unshift File.dirname(__FILE__)
-$:.unshift File.join(File.dirname(__FILE__), 'lib')
 
-# add target gem (rather than bundling for now)
+# for development purposes: add target gem path 
+# and require base file rather than bundling
 $:.unshift File.join(File.dirname(__FILE__), 'csspec-gem/lib')
-
-# Load models
-# Dir["models/*.rb"].each { |filename| require filename }
+require 'csspec'
 
 # load application routes
 require 'routes'
