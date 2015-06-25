@@ -1,7 +1,11 @@
 
-get '/:file.css' do
+get '/css/:file.css' do
   content_type 'text/css'
-  scss params[:file].to_sym, views: 'scss'
+  File.read "public/css/#{params[:file]}.css"
+end
+
+get '/css/:file.css.map' do
+  File.read "public/css/#{params[:file]}.css.map"
 end
 
 get '/qunit/:suite.html' do
