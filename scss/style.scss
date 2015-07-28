@@ -1,7 +1,12 @@
+@mixin something {
+  display: inline;
+}
+
 .thing {
+  @include something;
   position: absolute;
   #inner1 {
-    color: #fff;
+    color: #aaa;
   }
   #inner2 {
     color: #000;

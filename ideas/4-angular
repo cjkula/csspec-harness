@@ -1,0 +1,43 @@
+==== SCSS ====
+
+@mixin overlay($closebox, $inset) {
+  position: fixed; width: 100%; height: 100vh; display: none;
+  &#{$active-class} { display: block }
+  #{$closebox} { position: absolute; top: #{$inset}, right: #{$inset} }
+}
+
+==== SPECS ====
+
+@stylespec overlay($active-class, $closebox, $inset)
+  it should be fixed
+    expect { position: fixed }
+  it should match the screen size
+    expect 
+      width: [window].width
+      height: [window].height
+  @case inactive
+    it should not be displayed
+      expect { display: none }
+  @case active
+    it should be displayed
+      expect { display: block }
+
+
+
+
+==== FIXTURE & APPLICATION ====
+
+describe("overlay", function() {
+  beforeEach(function(){
+    $overlay = template('<div class="overlay"></div>');
+  });
+  stylespec.overlay.inactive.run();
+  context("when active", function() {
+    beforeEach(function() {
+      $overlay.addClass('is-active');
+    });
+    stylespec.overlay.active.run();
+  });
+  
+})
+

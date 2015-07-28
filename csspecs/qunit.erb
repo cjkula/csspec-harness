@@ -4,13 +4,16 @@
   <meta charset="utf-8">
   <title>CSSpecs</title>
   <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.18.0.css">
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <div id="qunit"></div>
   <div id="qunit-fixture"></div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="//code.jquery.com/qunit/qunit-1.18.0.js"></script>
-  <script src="<%= suite %>.js"></script>
+   <!-- <script src="<%= suite %>.js"></script> -->
+   <script type="application/javascript">
+     eval('QUnit.test( "hello test", function( assert ) {console.log($);assert.ok( 1 == "1", "Passed!" );});');
+   </script>
 </body>
 </html>

@@ -1,0 +1,15 @@
+
+describe "/index.html"
+
+  before(:all) do
+    get :index
+    @dom = CSSPec::DOM stylesheet: '/css/style.css'
+  end
+
+  describe ".header" do
+    it "should be 200px in height" do
+      expect(select['.header'].height).to measure 200
+    end
+  end
+
+end

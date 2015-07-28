@@ -1,0 +1,34 @@
+
+$test-fixture: '<div class="overlay"><div class="close"></div></div>'
+
+.fixture
+  content: $test-fixture
+
+  .overlay:describe-full-screen-overlay
+    +overlay-mixin(.active, .close, 10px)
+  
+    &:describe-not-active:expect-not-to-be-visible
+      display: none
+
+    &.active:describe-active
+      &:expect-to-be-visible
+        visible: true
+
+      &:expect-to-be-fixed
+        position: fixed
+
+      &:expect-to-match-the-screen-size
+        width-px: window.width-px
+        height-px: window.height-px
+
+      .close:describe-close-icon:expect-to-position-the-close-box
+        position: absolute
+        top: 10px
+        right: 10px
+    
+      &::device
+        width: 320px
+        height: 480px
+        &:describe-mobile-screen
+          &:expect
+            visible: false

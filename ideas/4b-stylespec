@@ -1,0 +1,84 @@
+==== SCSS ====
+
+@mixin overlay($active-class, $closebox, $inset) {
+  position: fixed; width: 100%; height: 100vh; display: none;
+  &#{$active-class} { display: block }
+  #{$closebox} { position: absolute; top: #{$inset}, right: #{$inset} }
+}
+
+==== SPECS ====
+
+@stylespec overlay-spec
+  describe overlay($active-class, $closebox, $inset)
+    it should be fixed
+      expect position: fixed
+    it should match the screen size
+      expect
+        width(px): [window].width(px)
+        height(px): [window].height(px)
+    it should not be displayed
+      expect display: none
+    if it has $active-class
+      it should be displayed
+        expect is :visible
+    describe $closebox
+      it should be absolute
+        expect position: absolute
+      it should have the overlay as its positioning parent
+        expect positioning-element: overlay
+      it should be top/right inset relative to the window
+        expect
+          top: $inset
+          right: $inset
+          left: auto
+          bottom: auto
+          // offset-top(px): $inset
+          // offset-right(px): $inset
+      it should be top/right inset relative to the overlay
+          offset-top(px): $inset more than overlay.offset-top(px)
+          offset-right(px): $inset less than overlay.offset-right(px)
+
+==== FIXTURE ====
+
+$fixture1: html ->
+  <div class="overlay">
+    <div class="close"></div>
+  </div>
+
+
+==== UNIT TESTS ====
+
+use $fixture
+  @import css/style // include app stylesheet
+  .overlay
+    @include overlay('.active', '.close', '10px')
+    @do overlay-spec
+
+    when active
+      +.active
+      @do overlay-spec
+    
+    describe .close
+      when top-left positioned
+        apply .top-left
+          @do .overlay.overlay-spec
+            expect 
+              left: 10px
+              right: auto
+
+==== CONSUMPTION BY TEST SUITE ====
+
+describe("overlay", function() {
+  beforeEach(function(){
+    $overlay = $('.overlay');
+  });
+  stylespec("overlay");
+  context("when active", function() {
+    beforeEach(function() {
+      $overlay.addClass('is-active');
+    });
+    stylespec("overlay");
+  });
+  
+})
+

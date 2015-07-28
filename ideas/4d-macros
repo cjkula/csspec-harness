@@ -1,0 +1,59 @@
+=== MACRO DEFINITION ===
+
+
+@macro overlay-tests($active-class, $closebox, $inset)
+
+  case $active-class
+    when active
+      expect :visible
+
+      it should be fixed
+        expect position: fixed
+      it should match the screen size
+        expect
+          width(): window.width()
+          height(): window.height()
+
+      describe $closebox, "close box"
+        it should position the close box
+          expect
+            position: absolute
+            top: $inset
+            right: $inset
+
+  else
+    when not active
+      expect display: none
+
+
+=== TEST EXECUTION ===
+
+@fixture
+  .overlay
+    .close
+
+describe .overlay
+  +overlay(.active, .close, 10px)
+  @media screen and (max-width <= 320px)
+    .close
+      display: none
+
+  =tests
+    +overlay-tests(.active, .close, 10px)
+
+  +tests
+
+  when .active
+    +tests
+    when phone
+      device
+        width: 320px
+        height: 480px
+      +tests
+      it should not show the close button
+        expect
+          .close not to be :visible
+
+
+
+

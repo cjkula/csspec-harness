@@ -1,0 +1,52 @@
+
+$fixture ->   // text template
+  .overlay
+    .close
+
+describe .overlay
+  @include overlay(.active, .close, 10px)  // straight up SASS; context is .overlay, so mixin is applied to that selector
+  use $fixture      // only at this point is $fixture recognized as being html/haml
+
+  it should be fixed
+    expect position: fixed
+    // once 'expect' is entered we are no longer setting CSS but evaluating, using the same syntax
+
+  it should match the screen size
+    expect
+      width(): [window].width()    // jQuery functions. Should be made easy to define new custom attributes/helpers in JavaScript.
+      height(): [window].height()  // square brackets are shorthand for $('selector'), but can also be queried for css attributes directly.
+
+  when .active          // applies class to 'it'
+    expect :visible     // implied 'it' clause? -- seems redundant to require "it should be visible"
+
+  when not .active      // removes class from 'it' (though this is not strictly necessary here since this is outside the previous case)
+    it should not be visible
+      expect display: none
+
+  describe .close, "close icon"  // establishes new inner context: [.overlay .close] and specifies spec description string
+    it should position the close box
+      expect
+        position: absolute
+        top: 10px
+        right: 10px
+
+  when "phone"
+    device
+      width: 320px
+      height: 480px
+    it should not show the close button
+      apply .active        // target (it) == .overlay from the containing describe scope
+      expect
+        .close not to be :visible  // long form: 'not to be', or just 'not'
+
+====
+
+$fixture -> <div id="overlay"></div>
+---
+@use $fixture
+
+====
+DEFINE ELEMENT METHOD
+
+*.pixel-count -> 
+  @outerWidth * @outerHeight
